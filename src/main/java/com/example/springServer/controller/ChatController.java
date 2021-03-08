@@ -19,8 +19,12 @@ public class ChatController {
     private ChatRepository chatRepository;
 
     @GetMapping("")
-    ResponseEntity<List<Chat>> getAll(){
-        return new ResponseEntity<>(chatRepository.findAll(), HttpStatus.OK);
+    ResponseEntity<List<Chat>> getAll(@RequestBody(required = false) User user){
+        if(user == null){
+            return new ResponseEntity<>(chatRepository.findAll(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(chatRepository.findAllByUsersContains(user), HttpStatus.OK);
+        }
     }
 
     @GetMapping("{id}")
@@ -31,5 +35,11 @@ public class ChatController {
     @PostMapping("")
     ResponseEntity<Chat> add(@RequestBody Chat chat){
         return new ResponseEntity<>(chatRepository.save(chat), HttpStatus.OK);
+    }
+
+    @PostMapping("{id}")
+    ResponseEntity<Object> deleteById(@PathVariable(name = "id") Integer id){
+        chatRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
