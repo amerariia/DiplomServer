@@ -20,7 +20,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("create")
-    ResponseEntity<User> create(){
+    void create(){
         User u1 = new User();
         u1.setEmail("d@d.c");
         u1.setName("aaaaaa");
@@ -41,12 +41,12 @@ public class UserController {
             add(u2);
             add(u3);
         }});
-        return ResponseEntity.ok().build();
+       // return ResponseEntity.ok().build();
     }
 
     @GetMapping("")
-    ResponseEntity<List<User>> getAll(){
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+    List<User> getAll(){
+         return userRepository.findAll();
     }
 
     @GetMapping("{id}")
