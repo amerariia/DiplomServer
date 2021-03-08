@@ -9,8 +9,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "chat")
-public class Chat {
+@Table(name = "study_group")
+public class Group {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,13 +19,6 @@ public class Chat {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = false)
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
-    private User creator;
-
-    @ManyToMany(mappedBy = "chats")
+    @OneToMany(mappedBy = "group")
     private Set<User> users;
 }

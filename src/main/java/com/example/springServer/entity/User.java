@@ -13,7 +13,7 @@ import java.util.Set;
 public class User {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "name", nullable = false)
@@ -25,9 +25,9 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Enumerated
-    @Column(name = "group", nullable = false)
-    private GroupEntity group;
+    @ManyToOne
+    @JoinColumn(name = "study_group")
+    private Group group;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
