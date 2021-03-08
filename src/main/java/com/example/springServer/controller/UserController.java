@@ -19,34 +19,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("create")
-    void create(){
-        User u1 = new User();
-        u1.setEmail("d@d.c");
-        u1.setName("aaaaaa");
-        u1.setPassword("aaaaa");
-        u1.setRole(RoleEntity.STUDENT);
-        User u2 = new User();
-        u2.setEmail("d@d.c");
-        u2.setName("aaaaaa");
-        u2.setPassword("pass");
-        u2.setRole(RoleEntity.STUDENT);
-        User u3 = new User();
-        u3.setEmail("d@d.c");
-        u3.setName("aaaaaa");
-        u3.setPassword("pass");
-        u3.setRole(RoleEntity.STUDENT);
-        userRepository.saveAll(new ArrayList<User>(){{
-            add(u1);
-            add(u2);
-            add(u3);
-        }});
-       // return ResponseEntity.ok().build();
-    }
-
     @GetMapping("")
-    List<User> getAll(){
-         return userRepository.findAll();
+    ResponseEntity<List<User>> getAll(){
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
