@@ -3,6 +3,7 @@ package com.example.springServer.controller;
 import com.example.springServer.entity.Message;
 import com.example.springServer.entity.User;
 import com.example.springServer.repository.MessageRepository;
+import com.example.springServer.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,20 +17,27 @@ import java.util.List;
 public class MessageController {
 
     @Autowired
-    private MessageRepository messageRepository;
+    private MessageService messageService;
 
     @GetMapping("")
     ResponseEntity<List<Message>> getAll(){
-        return new ResponseEntity<>(messageRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(messageService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     ResponseEntity<Message> getById(@PathVariable(name = "id") Integer id){
-        return new ResponseEntity<>(messageRepository.findById(id).orElse(null), HttpStatus.OK);
+        return new ResponseEntity<>(messageService.getById(id).orElse(null), HttpStatus.OK);
     }
 
     @PostMapping("")
     ResponseEntity<Message> add(@RequestBody Message message){
-        return new ResponseEntity<>(messageRepository.save(message), HttpStatus.OK);
+        messageService.save(message);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("{id}")
+    ResponseEntity<Object> deleteById(@PathVariable(name = "id") Integer id){
+        messageService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
