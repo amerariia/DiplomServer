@@ -20,12 +20,12 @@ public class RestartDbController {
     private MessageService messageService;
 
     @PostMapping("messages")
-    ResponseEntity<Message> deleteAllMessages(){
+    ResponseEntity<Object> deleteAllMessages(){
         messageService.deleteAll();
         return ResponseEntity.ok().build();
     }
     @PostMapping("chats")
-    ResponseEntity<Chat> deleteChats(){
+    ResponseEntity<Object> deleteChats(){
         chatService.deleteAllByCreator_RoleNot(RoleEntity.ADMIN);
         return ResponseEntity.ok().build();
     }

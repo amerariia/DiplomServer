@@ -30,7 +30,7 @@ public class MessageController {
     }
 
     @PostMapping("")
-    ResponseEntity<Message> add(@RequestBody Message message){
+    ResponseEntity<Object> add(@RequestBody Message message){
         messageService.save(message);
         return ResponseEntity.ok().build();
     }
