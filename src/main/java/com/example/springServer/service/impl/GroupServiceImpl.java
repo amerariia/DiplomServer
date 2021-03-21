@@ -1,12 +1,16 @@
 package com.example.springServer.service.impl;
 
+import com.example.springServer.entity.Chat;
 import com.example.springServer.entity.Group;
+import com.example.springServer.entity.User;
 import com.example.springServer.repository.GroupRepository;
 import com.example.springServer.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -25,5 +29,21 @@ public class GroupServiceImpl implements GroupService {
 
         groupRepository.save(groupFrom);
         groupRepository.save(groupTo);
+    }
+
+    @Override
+    public List<Group> getAll() {
+        return groupRepository.findAll();
+    }
+
+    @Override
+    public Optional<Group> getById(Integer id) { return groupRepository.findById(id); }
+
+    @Override
+    public Group add(Group group) { return groupRepository.save(group); }
+
+    @Override
+    public void deleteById(Integer id) {
+        groupRepository.deleteById(id);
     }
 }
