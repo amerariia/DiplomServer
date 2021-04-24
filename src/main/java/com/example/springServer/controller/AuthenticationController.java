@@ -1,6 +1,8 @@
 package com.example.springServer.controller;
 
+import com.example.springServer.dto.UserDto;
 import com.example.springServer.entity.User;
+import com.example.springServer.mapper.UserMapper;
 import com.example.springServer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,15 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class AuthenticationController {
     @Autowired
+    private UserMapper userMapper;
+    @Autowired
     private UserService userService;
 
     @PostMapping("login")
-    ResponseEntity<User> login(@RequestParam(name = "email") String email,
-                               @RequestParam(name = "password") String password){
+    ResponseEntity<UserDto> login(@RequestParam(name = "email") String email,
+                                  @RequestParam(name = "password") String password){
         userService.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
         return new ResponseEntity<>(
-                userService.getByEmailAndPassword(email, password),
+                userMapper.mapToDomain(userService.getByEmailAndPassword(email, password)),
                 HttpStatus.OK);
     }
 }

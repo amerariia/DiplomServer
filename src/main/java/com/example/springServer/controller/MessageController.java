@@ -1,8 +1,7 @@
 package com.example.springServer.controller;
 
-import com.example.springServer.entity.Message;
-import com.example.springServer.entity.User;
-import com.example.springServer.repository.MessageRepository;
+import com.example.springServer.dto.MessageDto;
+import com.example.springServer.mapper.MessageMapper;
 import com.example.springServer.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,28 +10,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/message")
 public class MessageController {
+    @Autowired
+    private MessageMapper messageMapper;
 
     @Autowired
     private MessageService messageService;
 
     @GetMapping("")
-    ResponseEntity<List<Message>> getAll(){
-        return new ResponseEntity<>(messageService.getAll(), HttpStatus.OK);
+    ResponseEntity<List<MessageDto>> getAll(){
+        return new ResponseEntity<>(
+                messageService.getAll().stream()
+                        .map(messageMapper::mapToDomain)
+                        .collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    ResponseEntity<Message> getById(@PathVariable(name = "id") Integer id){
-        return new ResponseEntity<>(messageService.getById(id).orElse(null), HttpStatus.OK);
+    ResponseEntity<MessageDto> getById(@PathVariable(name = "id") Integer id){
+        return new ResponseEntity<>(
+                messageMapper.mapToDomain(messageService.getById(id)),
+                HttpStatus.OK);
     }
 
     @PostMapping("")
-    ResponseEntity<Object> add(@RequestBody Message message){
-        messageService.save(message);
-        return ResponseEntity.ok().build();
+    ResponseEntity<MessageDto> add(@RequestBody MessageDto messageDto){
+        return new ResponseEntity<>(
+                messageMapper.mapToDomain(messageService.save(messageMapper.mapToEntity(messageDto))),
+                HttpStatus.OK);
     }
 
     @PostMapping("{id}")

@@ -1,7 +1,11 @@
 package com.example.springServer.controller;
 
-import com.example.springServer.entity.Chat;
-import com.example.springServer.entity.User;
+import com.example.springServer.dto.ChatDto;
+import com.example.springServer.dto.UserDto;
+import com.example.springServer.dto.UserInfoDto;
+import com.example.springServer.mapper.ChatMapper;
+import com.example.springServer.mapper.UserInfoMapper;
+import com.example.springServer.mapper.UserMapper;
 import com.example.springServer.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,32 +14,44 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
-
+    @Autowired
+    private ChatMapper chatMapper;
+    @Autowired
+    private UserInfoMapper userMapper;
     @Autowired
     private ChatService chatService;
 
     @GetMapping("")
-    ResponseEntity<List<Chat>> getAll(@RequestBody User user){
-        return new ResponseEntity<>(chatService.getAll(user), HttpStatus.OK);
+    ResponseEntity<List<ChatDto>> getAll(@RequestBody UserInfoDto userDto){
+        return new ResponseEntity<>(
+                chatService.getAll(userMapper.mapToEntity(userDto)).stream()
+                        .map(chatMapper::mapToDomain)
+                        .collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    ResponseEntity<Chat> getById(@PathVariable(name = "id") Integer id){
-        return new ResponseEntity<>(chatService.getById(id).orElse(null), HttpStatus.OK);
+    ResponseEntity<ChatDto> getById(@PathVariable(name = "id") Integer id){
+        return new ResponseEntity<>(
+                chatMapper.mapToDomain(chatService.getById(id)),
+                HttpStatus.OK);
     }
 
     @PostMapping("")
-    ResponseEntity<Chat> add(@RequestBody Chat chat){
-        return new ResponseEntity<>(chatService.add(chat), HttpStatus.OK);
+    ResponseEntity<ChatDto> add(@RequestBody ChatDto chatDto){
+        return new ResponseEntity<>(
+                chatMapper.mapToDomain(chatService.add(chatMapper.mapToEntity(chatDto))),
+                HttpStatus.OK);
     }
 
     @PostMapping("edit-chat")
-    ResponseEntity<Object> edit(@RequestBody Chat chat){
-        chatService.save(chat);
+    ResponseEntity<Object> edit(@RequestBody ChatDto chatDto){
+        chatService.save(chatMapper.mapToEntity(chatDto));
         return ResponseEntity.ok().build();
     }
 
