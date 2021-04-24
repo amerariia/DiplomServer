@@ -24,7 +24,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public Optional<Chat> getById(Integer id) { return chatRepository.findById(id); }
+    public Chat getById(Integer id) { return chatRepository.findById(id).orElse(null); }
 
     @Override
     public Chat add(Chat chat) { return chatRepository.save(chat); }
@@ -33,7 +33,6 @@ public class ChatServiceImpl implements ChatService {
     public Object save(Chat chat) {
         return chatRepository.save(chat);
     }
-
 
     @Override
     public void deleteById(Integer id) {

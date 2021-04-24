@@ -19,13 +19,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Optional<Message> getById(Integer id) {
-        return messageRepository.findById(id);
+    public Message getById(Integer id) {
+        return messageRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void save(Message message) {
-        messageRepository.save(message);
+    public Message save(Message message) {
+        return messageRepository.save(message);
     }
 
     @Override

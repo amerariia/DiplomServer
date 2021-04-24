@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface GroupService {
     void changeUsersGroup(Integer fromId, Integer toId);
     List<Group> getAll();
-    Optional<Group> getById(Integer id);
+    Group getById(Integer id);
     Group add(Group group);
     void deleteById(Integer id);
 }

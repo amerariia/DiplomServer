@@ -1,5 +1,6 @@
 package com.example.springServer.service;
 
+import com.example.springServer.dto.MessageDto;
 import com.example.springServer.entity.Message;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -8,8 +9,8 @@ import java.util.Optional;
 
 public interface MessageService {
     List<Message> getAll();
-    Optional<Message> getById(Integer id);
-    void save(Message message);
+    Message getById(Integer id);
+    Message save(Message message);
     void deleteById(Integer id);
     void deleteAll();
 }

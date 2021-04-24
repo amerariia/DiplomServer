@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService extends AuthenticationProvider {
     List<User> getAll();
-    Optional<User> getById(Integer id);
+    User getById(Integer id);
     User save(User user);
     User getByEmailAndPassword(String email, String password);
     void deleteById(Integer id);

@@ -1,6 +1,5 @@
 package com.example.springServer.service.impl;
 
-import com.example.springServer.entity.Group;
 import com.example.springServer.entity.User;
 import com.example.springServer.repository.GroupRepository;
 import com.example.springServer.repository.UserRepository;
@@ -13,10 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
 
@@ -33,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getById(Integer id) { return userRepository.findById(id); }
+    public User getById(Integer id) { return userRepository.findById(id).orElse(null); }
 
     @Override
     public User save(User user) {

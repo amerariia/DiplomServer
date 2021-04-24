@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ChatService {
     List<Chat> getAll(User user);
-    Optional<Chat> getById(Integer id);
+    Chat getById(Integer id);
     Chat add(Chat chat);
     Object save(Chat chat);
     void deleteById(Integer id);
