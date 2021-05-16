@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService {
         User user = getByEmailAndPassword(email, password);
         Authentication authenticate = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(),
                 singletonList(new SimpleGrantedAuthority(user.getRole().name())));
-        authenticate.setAuthenticated(true);
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
         return authenticate;
