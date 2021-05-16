@@ -11,6 +11,8 @@ import com.example.springServer.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -31,7 +33,11 @@ public class UserMapperImpl implements UserMapper {
         userDto.setName(entity.getName());
         userDto.setEmail(entity.getEmail());
         userDto.setPassword(entity.getPassword());
-        userDto.setGroupId(entity.getGroup().getId());
+        if(entity.getGroup() == null){
+            userDto.setGroupId(null);
+        }else {
+            userDto.setGroupId(entity.getGroup().getId());
+        }
         userDto.setRole(RoleDto.valueOf(entity.getRole().name()));
         userDto.setOwnedChatsIds(entity.getOwnedChats().stream().map(Chat::getId).collect(Collectors.toSet()));
         userDto.setChatsIds(entity.getChats().stream().map(Chat::getId).collect(Collectors.toSet()));
