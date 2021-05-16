@@ -56,7 +56,13 @@ public class UserMapperImpl implements UserMapper {
         user.setName(domain.getName());
         user.setEmail(domain.getEmail());
         user.setPassword(domain.getPassword());
-        user.setGroup(groupRepository.findById(domain.getGroupId()).orElse(null));
+
+        if(domain.getGroupId() == null){
+            user.setGroup(null);
+        }else{
+            user.setGroup(groupRepository.findById(domain.getGroupId()).orElse(null));
+        }
+
         user.setRole(RoleEntity.valueOf(domain.getRole().name()));
         user.setOwnedChats(domain.getOwnedChatsIds().stream()
                 .map(id -> chatRepository.findById(id).orElse(null))
