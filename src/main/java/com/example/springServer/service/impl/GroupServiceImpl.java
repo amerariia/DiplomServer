@@ -53,12 +53,20 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void deleteById(Integer id) {
+        List<User> allByGroup_id = userRepository.findAllByGroup_Id(id);
+        allByGroup_id.forEach(user -> user.setGroup(null));
+        userRepository.saveAll(allByGroup_id);
+
         groupRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void deleteAllByIds(List<Integer> ids) {
+        List<User> allByGroup_idIn = userRepository.findAllByGroup_IdIn(ids);
+        allByGroup_idIn.forEach(user -> user.setGroup(null));
+        userRepository.saveAll(allByGroup_idIn);
+
         groupRepository.deleteAllByIdIn(ids);
     }
 }
