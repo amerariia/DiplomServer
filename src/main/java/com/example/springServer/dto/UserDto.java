@@ -1,6 +1,5 @@
 package com.example.springServer.dto;
 
-import com.example.springServer.entity.RoleEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ public class UserDto {
     private String name;
     private String email;
     private String password;
-    private Integer groupId;
+    private GroupInfoDto group;
     private RoleDto role;
     private Set<Integer> ownedChatsIds;
     private Set<Integer> chatsIds;

@@ -5,14 +5,13 @@ import com.example.springServer.dto.UserDto;
 import com.example.springServer.entity.Chat;
 import com.example.springServer.entity.RoleEntity;
 import com.example.springServer.entity.User;
+import com.example.springServer.mapper.GroupInfoMapper;
 import com.example.springServer.mapper.UserMapper;
 import com.example.springServer.repository.ChatRepository;
 import com.example.springServer.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,6 +20,9 @@ public class UserMapperImpl implements UserMapper {
     private GroupRepository groupRepository;
     @Autowired
     private ChatRepository chatRepository;
+
+    @Autowired
+    private GroupInfoMapper groupInfoMapper;
 
     @Override
     public UserDto mapToDomain(User entity) {
@@ -34,9 +36,9 @@ public class UserMapperImpl implements UserMapper {
         userDto.setEmail(entity.getEmail());
         userDto.setPassword(entity.getPassword());
         if(entity.getGroup() == null){
-            userDto.setGroupId(null);
+            userDto.setGroup(null);
         }else {
-            userDto.setGroupId(entity.getGroup().getId());
+            userDto.setGroup(groupInfoMapper.mapToDomain(entity.getGroup()));
         }
         userDto.setRole(RoleDto.valueOf(entity.getRole().name()));
         userDto.setOwnedChatsIds(entity.getOwnedChats().stream().map(Chat::getId).collect(Collectors.toSet()));
@@ -57,10 +59,10 @@ public class UserMapperImpl implements UserMapper {
         user.setEmail(domain.getEmail());
         user.setPassword(domain.getPassword());
 
-        if(domain.getGroupId() == null){
+        if(domain.getGroup() == null){
             user.setGroup(null);
         }else{
-            user.setGroup(groupRepository.findById(domain.getGroupId()).orElse(null));
+            user.setGroup(groupRepository.findById(domain.getGroup().getId()).orElse(null));
         }
 
         user.setRole(RoleEntity.valueOf(domain.getRole().name()));

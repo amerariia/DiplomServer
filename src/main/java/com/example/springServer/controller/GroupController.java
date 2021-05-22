@@ -1,6 +1,8 @@
 package com.example.springServer.controller;
 
 import com.example.springServer.dto.GroupDto;
+import com.example.springServer.dto.GroupInfoDto;
+import com.example.springServer.mapper.GroupInfoMapper;
 import com.example.springServer.mapper.GroupMapper;
 import com.example.springServer.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 public class GroupController {
     @Autowired
     private GroupMapper groupMapper;
+    @Autowired
+    private GroupInfoMapper groupInfoMapper;
     @Autowired
     private GroupService groupService;
 
@@ -32,6 +36,11 @@ public class GroupController {
     @GetMapping("{id}")
     GroupDto getById(@PathVariable(name = "id") Integer id){
         return groupMapper.mapToDomain(groupService.getById(id));
+    }
+
+    @GetMapping("info")
+    List<GroupInfoDto> getAllInfo(){
+        return groupService.getAll().stream().map(groupInfoMapper::mapToDomain).collect(Collectors.toList());
     }
 
     @PostMapping("")
