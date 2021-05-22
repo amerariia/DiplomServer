@@ -44,6 +44,6 @@ public class GroupController {
         groupService.deleteById(id);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("")
     void deleteAllByIds(@RequestBody List<Integer> ids){ groupService.deleteAllByIds(ids);}
 }
