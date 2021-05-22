@@ -22,22 +22,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/static/**", "/login", "/register-page").permitAll() //TODO change
                 .antMatchers("/profile").authenticated() //TODO change
-//                .antMatchers("/entrant/**").hasAnyAuthority(RoleEntity.STUDENT.name())
-//                .antMatchers("/admin/**").hasAnyAuthority(RoleEntity.ADMIN.name())
-//
-//                .and()
-//                .formLogin()
-//                .loginProcessingUrl("/login")
-//                .usernameParameter("email")
-//                .passwordParameter("password")
-//                .permitAll()
-//
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .invalidateHttpSession(true)
-//                .permitAll()
-
+                .antMatchers("/entrant/**").hasAnyAuthority(RoleEntity.STUDENT.name())
+                .antMatchers("/admin/**").hasAnyAuthority(RoleEntity.ADMIN.name())
                 .and()
                 .csrf()
                 .disable();

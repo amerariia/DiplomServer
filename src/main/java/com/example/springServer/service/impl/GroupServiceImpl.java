@@ -4,6 +4,7 @@ import com.example.springServer.entity.Chat;
 import com.example.springServer.entity.Group;
 import com.example.springServer.entity.User;
 import com.example.springServer.repository.GroupRepository;
+import com.example.springServer.repository.UserRepository;
 import com.example.springServer.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import java.util.Optional;
 @Service
 public class GroupServiceImpl implements GroupService {
 
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private GroupRepository groupRepository;
 
@@ -40,10 +43,20 @@ public class GroupServiceImpl implements GroupService {
     public Group getById(Integer id) { return groupRepository.findById(id).orElse(null); }
 
     @Override
-    public Group add(Group group) { return groupRepository.save(group); }
+    public Group add(Group group) {
+
+        Group savedGroup = groupRepository.save(group);
+        group.getUsers().forEach(user -> user.setGroup(savedGroup));
+        userRepository.saveAll(group.getUsers());
+        return  savedGroup;}
 
     @Override
     public void deleteById(Integer id) {
         groupRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAllByIds(List<Integer> ids) {
+        groupRepository.deleteAllByIdIn(ids);
     }
 }

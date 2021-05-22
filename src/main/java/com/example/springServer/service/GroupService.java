@@ -13,4 +13,6 @@ public interface GroupService {
     Group getById(Integer id);
     Group add(Group group);
     void deleteById(Integer id);
+
+    void deleteAllByIds(List<Integer> ids);
 }
