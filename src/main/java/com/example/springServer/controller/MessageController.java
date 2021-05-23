@@ -27,6 +27,13 @@ public class MessageController {
                     .collect(Collectors.toList());
     }
 
+    @GetMapping("chat")
+    List<MessageDto> getAllByChatId(@RequestParam("chatId") Integer id){
+        return messageService.getAllByChatId(id).stream()
+                .map(messageMapper::mapToDomain)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("{id}")
     ResponseEntity<MessageDto> getById(@PathVariable(name = "id") Integer id){
         return new ResponseEntity<>(messageMapper.mapToDomain(messageService.getById(id)),

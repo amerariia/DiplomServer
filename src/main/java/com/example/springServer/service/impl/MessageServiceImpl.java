@@ -19,6 +19,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<Message> getAllByChatId(Integer id) {
+        return messageRepository.findAllByChatId(id);
+    }
+
+    @Override
     public Message getById(Integer id) {
         return messageRepository.findById(id).orElse(null);
     }
