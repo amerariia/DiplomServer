@@ -26,6 +26,9 @@ public class Chat {
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
 
-    @ManyToMany(mappedBy = "chats")
+    @ManyToMany
+    @JoinTable(name = "user_chat",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 }

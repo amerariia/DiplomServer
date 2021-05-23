@@ -25,6 +25,7 @@ public class ChatMapperImpl implements ChatMapper {
         chatDto.setId(entity.getId());
         chatDto.setName(entity.getName());
         chatDto.setDescription(entity.getDescription());
+        chatDto.setCreator(userInfoMapper.mapToDomain(entity.getCreator()));
         chatDto.setUsers(entity.getUsers().stream()
                 .map(userInfoMapper::mapToDomain)
                 .collect(Collectors.toSet()));

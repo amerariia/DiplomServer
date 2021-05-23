@@ -27,7 +27,14 @@ public class ChatServiceImpl implements ChatService {
     public Chat getById(Integer id) { return chatRepository.findById(id).orElse(null); }
 
     @Override
-    public Chat add(Chat chat) { return chatRepository.save(chat); }
+    public Chat add(Chat chat) {
+        chat.getUsers().forEach(user -> user.getChats().add(chat));
+        //chat.getCreator().getOwnedChats().add(chat);
+        if(chat.getCreator().getRole() == RoleEntity.TEACHER){
+            chat.getUsers().add(chat.getCreator());
+        }
+        return chatRepository.save(chat);
+    }
 
     @Override
     public Object save(Chat chat) {

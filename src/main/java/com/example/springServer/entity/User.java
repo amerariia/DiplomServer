@@ -36,10 +36,6 @@ public class User {
     @OneToMany(mappedBy = "creator")
     private Set<Chat> ownedChats;
 
-    @ManyToMany
-    @JoinTable(name = "user_chat",
-            joinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-                    referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "users")
     private Set<Chat> chats;
 }
