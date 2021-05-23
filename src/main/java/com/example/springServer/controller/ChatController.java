@@ -1,6 +1,7 @@
 package com.example.springServer.controller;
 
 import com.example.springServer.dto.ChatDto;
+import com.example.springServer.dto.UserDto;
 import com.example.springServer.dto.UserInfoDto;
 import com.example.springServer.mapper.ChatMapper;
 import com.example.springServer.mapper.UserInfoMapper;
@@ -18,13 +19,11 @@ public class ChatController {
     @Autowired
     private ChatMapper chatMapper;
     @Autowired
-    private UserInfoMapper userMapper;
-    @Autowired
     private ChatService chatService;
 
     @GetMapping("")
-    List<ChatDto> getAll(@RequestBody UserInfoDto userDto){
-        return chatService.getAll(userMapper.mapToEntity(userDto)).stream()
+    List<ChatDto> getAll(@RequestBody UserDto userDto){
+        return chatService.getAll(userDto.getChatsIds()).stream()
                         .map(chatMapper::mapToDomain)
                         .collect(Collectors.toList());
     }

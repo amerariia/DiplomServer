@@ -5,6 +5,7 @@ import com.example.springServer.entity.RoleEntity;
 import com.example.springServer.entity.User;
 import com.example.springServer.repository.ChatRepository;
 import com.example.springServer.service.ChatService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -19,8 +21,8 @@ public class ChatServiceImpl implements ChatService {
     private ChatRepository chatRepository;
 
     @Override
-    public List<Chat> getAll(User user) {
-            return chatRepository.findAllByUsersContains(user);
+    public List<Chat> getAll(Set<Integer> ids) {
+            return chatRepository.findAllByIdIn(ids);
     }
 
     @Override

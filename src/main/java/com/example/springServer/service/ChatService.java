@@ -6,9 +6,10 @@ import com.example.springServer.entity.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ChatService {
-    List<Chat> getAll(User user);
+    List<Chat> getAll(Set<Integer> ids);
     Chat getById(Integer id);
     Chat add(Chat chat);
     Object save(Chat chat);
