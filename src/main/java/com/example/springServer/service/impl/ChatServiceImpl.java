@@ -22,7 +22,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<Chat> getAll(Set<Integer> ids) {
-            return chatRepository.findAllByIdIn(ids);
+        return chatRepository.findAllByIdIn(ids);
     }
 
     @Override

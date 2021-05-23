@@ -22,7 +22,7 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    @GetMapping("")
+    @PostMapping("")
     List<ChatDto> getAll(@RequestBody Set<Integer> ids){
         return chatService.getAll(ids).stream()
                         .map(chatMapper::mapToDomain)
