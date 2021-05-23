@@ -12,4 +12,6 @@ public interface ChatRepository extends JpaRepository<Chat, Integer> {
     List<Chat> findAllByUsersContains(User user);
     List<Chat> findAllByIdIn(Set<Integer> ids);
     void deleteAllByCreator_RoleNot(RoleEntity roleEntity);
+
+    void deleteAllByIdIn(List<Integer> ids);
 }

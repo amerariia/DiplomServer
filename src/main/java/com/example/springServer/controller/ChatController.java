@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
@@ -22,8 +23,8 @@ public class ChatController {
     private ChatService chatService;
 
     @GetMapping("")
-    List<ChatDto> getAll(@RequestBody UserDto userDto){
-        return chatService.getAll(userDto.getChatsIds()).stream()
+    List<ChatDto> getAll(@RequestBody Set<Integer> ids){
+        return chatService.getAll(ids).stream()
                         .map(chatMapper::mapToDomain)
                         .collect(Collectors.toList());
     }
@@ -47,4 +48,7 @@ public class ChatController {
     void deleteById(@PathVariable(name = "id") Integer id){
         chatService.deleteById(id);
     }
+
+    @DeleteMapping("")
+    void deleteAllByIds(@RequestBody List<Integer> ids){ chatService.deleteAllByIds(ids);}
 }

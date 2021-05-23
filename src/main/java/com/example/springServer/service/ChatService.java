@@ -15,4 +15,6 @@ public interface ChatService {
     Object save(Chat chat);
     void deleteById(Integer id);
     void deleteAllByCreator_RoleNot(RoleEntity roleEntity);
+
+    void deleteAllByIds(List<Integer> ids);
 }

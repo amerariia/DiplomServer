@@ -50,6 +50,11 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void deleteAllByCreator_RoleNot(RoleEntity roleEntity) {
+        chatRepository.deleteAllByCreator_RoleNot(roleEntity);
+    }
 
+    @Override
+    public void deleteAllByIds(List<Integer> ids) {
+        chatRepository.deleteAllByIdIn(ids);
     }
 }
