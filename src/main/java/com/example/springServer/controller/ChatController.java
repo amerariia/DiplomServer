@@ -22,8 +22,8 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    @PostMapping("")
-    List<ChatDto> getAll(@RequestBody Set<Integer> ids){
+    @GetMapping("")
+    List<ChatDto> getAll(@RequestParam(value = "ids") Set<Integer> ids){
         return chatService.getAll(ids).stream()
                         .map(chatMapper::mapToDomain)
                         .collect(Collectors.toList());
