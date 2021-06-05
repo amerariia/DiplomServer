@@ -23,6 +23,7 @@ public class UserInfoMapperImpl implements UserInfoMapper {
         UserInfoDto userInfoDto = new UserInfoDto();
         userInfoDto.setId(entity.getId());
         userInfoDto.setName(entity.getName());
+        userInfoDto.setEmail(entity.getEmail());
         return userInfoDto;
     }
 
